@@ -1,0 +1,53 @@
+# Python
+__pycache__/
+*.py[cod]
+*.so
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+
+# Environments
+.venv/
+venv/
+ENV/
+env/
+
+# Jupyter
+.ipynb_checkpoints/
+
+# Editors
+.vscode/
+.idea/
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Logs / outputs
+*.log
+runs/
+wandb/
+
+# Local data (do not commit patient/clinical data)
+data/**
+!data/.gitkeep
+*.csv
+*.xlsx
+
+# Model weights / checkpoints (do not commit)
+*.pth
+*.pt
+*.ckpt
+*.bin
+*.safetensors
+
+# Local Hugging Face model dirs (download from HF instead)
+Chinses_bert/**
+!Chinses_bert/.gitkeep
+LLama2_Chinese_Med/**
+!LLama2_Chinese_Med/.gitkeep
+Llama3-8B-Chinese-Chat/**
+!Llama3-8B-Chinese-Chat/.gitkeep
+
+# Paper PDFs (do not redistribute)
+bmjdhai-2025-000248_Proof_hi (1).pdf
