@@ -80,6 +80,61 @@ Folder names in this repo match the intended local directories:
 
 ---
 
+## 从 Hugging Face 获取模型（放到本仓库的三个目录）
+本仓库只提供**下游训练/融合**代码，不提供大模型权重。请从 Hugging Face 下载到对应目录（不要把权重提交到 GitHub）。
+
+### 0) 安装与登录
+- 安装（用于下载与推理提取 embedding）：
+
+```bash
+pip install -U transformers accelerate huggingface_hub safetensors
+```
+
+- 登录（如模型为 gated/需授权，必须先在网页同意协议并使用 token 登录）：
+
+```bash
+huggingface-cli login
+```
+
+> Hugging Face 官网：`https://huggingface.co`
+
+### 1) 下载到 `Chinses_bert/`（BERT-family / 768d）
+选择任意可用的中文 BERT（或医疗领域 BERT）checkpoint，然后执行：
+
+```bash
+huggingface-cli download <BERT_CHECKPOINT_ID> ^
+  --local-dir Chinses_bert ^
+  --local-dir-use-symlinks False
+```
+
+下载完成后，目录里通常应包含 `config.json`、分词器文件以及权重文件（如 `model.safetensors`/`pytorch_model.bin`）。
+
+### 2) 下载到 `LLama2_Chinese_Med/`（LLaMA 2）
+如果使用官方 LLaMA 2（或任何 gated 模型），需要先在 Hugging Face 页面申请/同意协议后再下载：
+
+```bash
+huggingface-cli download meta-llama/Llama-2-7b-hf ^
+  --local-dir LLama2_Chinese_Med ^
+  --local-dir-use-symlinks False
+```
+
+如你使用的是中文/医疗微调版 LLaMA 2，请把 `meta-llama/Llama-2-7b-hf` 替换为你的模型 ID。
+
+### 3) 下载到 `Llama3-8B-Chinese-Chat/`（LLaMA 3）
+
+```bash
+huggingface-cli download meta-llama/Meta-Llama-3-8B-Instruct ^
+  --local-dir Llama3-8B-Chinese-Chat ^
+  --local-dir-use-symlinks False
+```
+
+### 4) 注意事项
+- **不要提交模型权重**：本仓库 `.gitignore` 已对上述目录做了忽略（仅保留 `.gitkeep` 占位）。
+- **Windows 命令行**：上面示例用 `^` 进行换行（PowerShell/CMD 通用写法之一）；如你使用 bash，请把 `^` 改为 `\\`。
+- **维度匹配**：下游脚本假设你导出的文本 embedding 维度与所选 backbone 对应（例如 7 字段拼接后的总维度）。
+
+---
+
 ## Training / evaluation
 1. Prepare:
    - structured series matrix
