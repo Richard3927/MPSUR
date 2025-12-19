@@ -39,7 +39,7 @@ os.environ['CUDA_VISIBLE_DEVICES'] = '2'   ####gpu选择
 dim = 40
 
 net = MM.Mut_Modal(3)#.TransFormer(2)#ml.SKnet(1,2)
-#net = torch.load("/data/nfs_rt16/luyuan/code/interspeech_classifition/ResNet_0207_augment/7_my_model.pth")#.module
+# net = torch.load("path/to/model.pth")  # optional: load a pretrained checkpoint
 #print(net)
 device = torch.device("cuda:0" if torch.cuda.is_available() else "cpu")  ###如果没有gpu选择cpu
 
