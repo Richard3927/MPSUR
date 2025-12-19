@@ -1,8 +1,6 @@
 # MPSUR: Predicting Causes of Unplanned Reoperations with an AI-based Multi‑Modal System
 
-Research code for **MPSUR**: multi‑modal prediction of **unplanned reoperation causes** from structured variables and clinical text embeddings.
-
-Research code for **MPSUR** (Multi‑modal Prediction System for Causes of Unplanned Reoperation): a multi‑modal classifier that predicts the **cause category** of unplanned reoperations from **multi‑modal EMR features**.
+Research code for **MPSUR** (Multi‑modal Prediction System for Causes of Unplanned Reoperation): a multi‑modal classifier that predicts the **cause category** of unplanned reoperations from **multi‑modal EMR features** (structured variables + clinical text embeddings).
 
 ![Overview of MPSUR](Overview_of_the_MPSUR.png)
 
