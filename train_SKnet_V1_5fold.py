@@ -56,7 +56,7 @@ criterion = torch.nn.CrossEntropyLoss()  #####CE准则loss
 optimizer = optim.Adam(net.parameters(), lr=lr)  ########优化器
 
 
-#data = pd.read_csv('/disk1/xly/un-planned_reoperation/data/data_lite.csv',engine='python',encoding='gbk')
+#data = pd.read_csv('un-planned_reoperation/data/data_lite.csv',engine='python',encoding='gbk')
 # print(data)
 
 def evaluate_model(net, loader, device, branch="all"):
@@ -93,23 +93,23 @@ def evaluate_model(net, loader, device, branch="all"):
     }
 
 
-data = np.loadtxt("/disk1/xly/un-planned_reoperation/data/2025_12_15/xh_all_3.txt")
-data1 = np.loadtxt("/disk1/xly/un-planned_reoperation/data/2025_12_15/xh_all_text_CB.txt")
+data = np.loadtxt("un-planned_reoperation/data/2025_12_15/xh_all_3.txt")
+data1 = np.loadtxt("un-planned_reoperation/data/2025_12_15/xh_all_text_CB.txt")
 
-data_1 = np.loadtxt("/disk1/xly/un-planned_reoperation/data/2025_12_15/cangzhou_3.txt")
-data1_1 = np.loadtxt("/disk1/xly/un-planned_reoperation/data/2025_12_15/cangzhou_text_CB.txt")
+data_1 = np.loadtxt("un-planned_reoperation/data/2025_12_15/cangzhou_3.txt")
+data1_1 = np.loadtxt("un-planned_reoperation/data/2025_12_15/cangzhou_text_CB.txt")
 
-data_2 = np.loadtxt("/disk1/xly/un-planned_reoperation/data/2025_12_15/last_3.txt")
-data1_2 = np.loadtxt("/disk1/xly/un-planned_reoperation/data/2025_12_15/last_text_CB.txt")
+data_2 = np.loadtxt("un-planned_reoperation/data/2025_12_15/last_3.txt")
+data1_2 = np.loadtxt("un-planned_reoperation/data/2025_12_15/last_text_CB.txt")
 
 data = np.concatenate((data, data_1, data_2), axis=0)
 data1 = np.concatenate((data1, data1_1, data1_2), axis=0)
 
-data_test_ex = np.loadtxt("/disk1/xly/un-planned_reoperation/data/2025_12_15/data_Lite_externel_3.txt")
-data_test_ex1 = np.loadtxt("/disk1/xly/un-planned_reoperation/data/2025_12_15/data_Lite_externel_text_CB.txt")
+data_test_ex = np.loadtxt("un-planned_reoperation/data/2025_12_15/data_Lite_externel_3.txt")
+data_test_ex1 = np.loadtxt("un-planned_reoperation/data/2025_12_15/data_Lite_externel_text_CB.txt")
 
-data_test_ex_V1 = np.loadtxt("/disk1/xly/un-planned_reoperation/data/2025_12_15/5gezhongxin_3.txt")
-data_test_ex1_V1 = np.loadtxt("/disk1/xly/un-planned_reoperation/data/2025_12_15/5gezhongxin_text_CB.txt")
+data_test_ex_V1 = np.loadtxt("un-planned_reoperation/data/2025_12_15/5gezhongxin_3.txt")
+data_test_ex1_V1 = np.loadtxt("un-planned_reoperation/data/2025_12_15/5gezhongxin_text_CB.txt")
 
 data = np.concatenate((data, data1), axis=1)
 data_test_ex = np.concatenate((data_test_ex, data_test_ex1), axis=1)

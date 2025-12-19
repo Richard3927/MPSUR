@@ -6,14 +6,14 @@ import os
 import torch
 sys.stdout = codecs.getwriter("utf-8")(sys.stdout.detach())
 print("中文")
-data_path = '/disk1/xly/un-planned_reoperation/data/data_lite.csv'
+data_path = '/un-planned_reoperation/data/data_lite.csv'
 from transformers import AutoModel, AutoTokenizer
 
 from openpyxl import load_workbook
 
 
 os.environ["KMP_DUPLICATE_LIB_OK"] = "TRUE"
-model_dir = os.path.expanduser('/disk1/xly/un-planned_reoperation/Chinses_bert') 
+model_dir = os.path.expanduser('/un-planned_reoperation/Chinses_bert') 
 #print(model_dir)
 tokenizer = AutoTokenizer.from_pretrained(model_dir)
 print("token ok")
@@ -23,7 +23,7 @@ print("model ok")
 
 
 # 加载 Excel 文件
-file_path = "/disk1/xly/un-planned_reoperation/data/2025_12_15/extenerel.xlsx"
+file_path = "/un-planned_reoperation/data/2025_12_15/extenerel.xlsx"
 workbook = load_workbook(file_path)
 
 # 选择工作表
@@ -392,8 +392,8 @@ text_encode = np.array(text_encode)
 print(data_encode.shape)
 print(data_encode[:,:6])
 print(text_encode.shape)
-np.savetxt("/disk1/xly/un-planned_reoperation/data/2025_12_15/data_Lite_externel_3.txt", data_encode)
-np.savetxt("/disk1/xly/un-planned_reoperation/data/2025_12_15/data_Lite_externel_text_CB.txt", text_encode)
+np.savetxt("un-planned_reoperation/data/2025_12_15/data_Lite_externel_3.txt", data_encode)
+np.savetxt("un-planned_reoperation/data/2025_12_15/data_Lite_externel_text_CB.txt", text_encode)
 
 
 

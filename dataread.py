@@ -63,12 +63,12 @@ def data_read_CB_test_mask(data, label, index):
     #print(text.shape)
     # series = normalization(series)
     # text = normalization(text)
-    graph = np.loadtxt("/disk1/xly/un-planned_reoperation/data/adj_template_1.txt")
+    graph = np.loadtxt("un-planned_reoperation/data/adj_template_1.txt")
     return np.array(series), np.array(text), np.array(graph), np.array(label).astype(np.int64) 
 
   
-# data_test_ex_V1 = np.loadtxt("/disk1/xly/un-planned_reoperation/data/2025_07_10/5gezhongxin_test_3.txt")
-# data_test_ex1_V1 = np.loadtxt("/disk1/xly/un-planned_reoperation/data/2025_07_10/5gezhongxin_test_text_CB.txt")
+# data_test_ex_V1 = np.loadtxt("un-planned_reoperation/data/2025_07_10/5gezhongxin_test_3.txt")
+# data_test_ex1_V1 = np.loadtxt("un-planned_reoperation/data/2025_07_10/5gezhongxin_test_text_CB.txt")
 
 # data_test_ex_V1 = np.concatenate((data_test_ex_V1, data_test_ex1_V1), axis=1)
 # X_ex_V1 = data_test_ex_V1[:, 2:]
@@ -155,7 +155,7 @@ def data_read_llama2(data, label):
     text = data[:,20:].reshape((-1,35840))
     # series = normalization(series)
     # text = normalization(text)
-    graph = np.loadtxt("/disk1/xly/un-planned_reoperation/data/adj_template_1.txt")
+    graph = np.loadtxt("un-planned_reoperation/data/adj_template_1.txt")
     return np.array(series), np.array(text), np.array(graph), np.array(label).astype(np.int64)
  
 class DatasetSplit_LLama2(Dataset):
@@ -183,7 +183,7 @@ def data_read_llama3(data, label):
     text = data[:,20:].reshape((-1,28672))
     # series = normalization(series)
     # text = normalization(text)
-    graph = np.loadtxt("/disk1/xly/un-planned_reoperation/data/adj_template_1.txt")
+    graph = np.loadtxt("un-planned_reoperation/data/adj_template_1.txt")
     return np.array(series), np.array(text), np.array(graph), np.array(label).astype(np.int64)
  
     # return np.array(series), np.array(text), np.array(label).astype(np.int64)
@@ -213,7 +213,7 @@ def data_read_CB_test_g(data, label):
     text = data[:,20:].reshape((-1,5376))#5376
     # series = normalization(series)
     # text = normalization(text)
-    graph = np.loadtxt("/disk1/xly/un-planned_reoperation/data/adj_template_1.txt")
+    graph = np.loadtxt("un-planned_reoperation/data/adj_template_1.txt")
     return np.array(series), np.array(text), np.array(graph), np.array(label).astype(np.int64)
 
         
