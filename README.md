@@ -1,6 +1,8 @@
 # MPSUR: Predicting Causes of Unplanned Reoperations with an AI-based Multi‑Modal System
 
-Research code for **MPSUR** (Multi‑modal Prediction System for Causes of Unplanned Reoperation): a multi‑modal classifier that predicts the **cause category** of unplanned reoperations from **multi‑modal EMR features** (structured variables + clinical text embeddings).
+This repository contains research code for **MPSUR** (Multi‑modal Prediction System for Causes of Unplanned Reoperation), a multi‑modal learning pipeline for categorizing unplanned reoperation causes from **multi‑modal EMR features**.
+
+We fuse **21 structured variables** with embeddings derived from **multiple clinical text fields**, provide example preprocessing to convert tabular sources into model‑ready matrices, and include a training script for cross‑validation experiments.
 
 ![Overview of MPSUR](Overview_of_the_MPSUR.png)
 
@@ -20,8 +22,8 @@ Research code for **MPSUR** (Multi‑modal Prediction System for Causes of Unpla
 ## Repository structure
 - `Muti_Modal.py`: multi‑modal model (structured branch + text branch + fusion head).
 - `dataread.py`: dataset utilities / reshaping helpers for different text backbones.
-- `data_process_V2.py`: example preprocessing / feature extraction script.
-- `train_SKnet_V1_5fold.py`: training & evaluation script (5‑fold CV logic; paths need to be adapted).
+- `data_process.py`: example preprocessing / feature extraction script.
+- `train_5fold.py`: training & evaluation script (5‑fold CV logic; paths need to be adapted).
 - `data/`: placeholder directory (no raw EMR data is included).
 - `Chinses_bert/`, `LLama2_Chinese_Med/`, `Llama3-8B-Chinese-Chat/`: placeholders for local checkpoints (weights are not redistributed).
 
@@ -131,11 +133,11 @@ huggingface-cli download meta-llama/Meta-Llama-3-8B-Instruct --local-dir Llama3-
    - structured series matrix
    - text embedding matrix
    - graph template `adj_template_1.txt`
-2. Update file paths in `train_SKnet_V1_5fold.py` to point to your prepared files.
+2. Update file paths in `train_5fold.py` to point to your prepared files.
 3. Run:
 
 ```bash
-python train_SKnet_V1_5fold.py
+python train_5fold.py
 ```
 
 The script reports metrics for three branches:
@@ -147,20 +149,6 @@ The script reports metrics for three branches:
 
 ## License
 This repository is released under the **Apache License 2.0**. See `LICENSE`.
-
----
-
-## Citation
-If you use this code, please cite:
-
-```bibtex
-@article{xie2025mpsur,
-  title   = {Predicting the causes of unplanned reoperations using an AI-based multi-modal system: A multi-center, multi-departmental study based on EMRs},
-  author  = {Xie, Luyuan and Zhao, Congpu and Zhao, Pengyu and Li, Shengyang and Tan, Xutong and Shen, Qingni and Wu, Zhonghai and Yan, Guochen and Gong, Xuan and Luan, Tianyu and Wang, Dan and Zhou, Jiong and Ma, Xiaojun},
-  journal = {BMJ Digital Health and AI},
-  year    = {2025}
-}
-```
 
 ---
 
