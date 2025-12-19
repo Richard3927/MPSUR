@@ -1,6 +1,6 @@
 # MPSUR: Predicting Causes of Unplanned Reoperations with an AI-based Multi‑Modal System
 
-本仓库提供 **MPSUR** 的研究代码：面向**非计划再手术原因**的多模态预测（结构化变量 + 临床文本嵌入）。
+Research code for **MPSUR**: multi‑modal prediction of **unplanned reoperation causes** from structured variables and clinical text embeddings.
 
 Research code for **MPSUR** (Multi‑modal Prediction System for Causes of Unplanned Reoperation): a multi‑modal classifier that predicts the **cause category** of unplanned reoperations from **multi‑modal EMR features**.
 
@@ -10,9 +10,9 @@ Research code for **MPSUR** (Multi‑modal Prediction System for Causes of Unpla
 
 ## Highlights
 - Multi‑modal fusion of:
-  - **Structured series features** (20 variables)
+  - **Structured series features** (21 variables)
   - **Clinical text embeddings** (7 text fields concatenated)
-- A shared **graph template** (`20×20`) is used for the structured branch.
+- A shared **graph template** (`21×21`) is used for the structured branch.
 - Supports multiple text backbones by swapping the exported embedding matrix:
   - CB (BERT-family, 768‑d)
   - LLaMA 2 / LLaMA 3 (hidden states used as embeddings)
@@ -35,10 +35,10 @@ Research code for **MPSUR** (Multi‑modal Prediction System for Causes of Unpla
 **Goal:** multi‑class classification of the cause category (e.g., bleeding / infection / other factors).
 
 **Inputs:**
-1. **Structured series**: 20 encoded variables.
+1. **Structured series**: 21 encoded variables.
 2. **Clinical text**: 7 text fields embedded by a backbone model and concatenated.
 
-**Graph template:** the structured branch expects a precomputed adjacency matrix (e.g., `adj_template_1.txt`, shape `20×20`) reused across samples.
+**Graph template:** the structured branch expects a precomputed adjacency matrix (e.g., `adj_template_1.txt`, shape `21×21`) reused across samples.
 
 ---
 
@@ -58,7 +58,7 @@ Due to patient privacy and institutional constraints, **raw EMR data is not incl
 A plain‑text numeric matrix where:
 - column 0: `patient_id` (or record index)
 - column 1: `label` (`0/1/2` according to your preprocessing)
-- columns 2..: **20 structured features**
+- columns 2..: **21 structured features**
 
 ### Text embedding matrix
 A plain‑text numeric matrix where each row is the concatenation of **7 text fields**:
@@ -80,58 +80,51 @@ Folder names in this repo match the intended local directories:
 
 ---
 
-## 从 Hugging Face 获取模型（放到本仓库的三个目录）
-本仓库只提供**下游训练/融合**代码，不提供大模型权重。请从 Hugging Face 下载到对应目录（不要把权重提交到 GitHub）。
+## Download models from Hugging Face (into the three local folders)
+This repository does **not** redistribute model weights. Download checkpoints from Hugging Face into the corresponding local folders (and do not commit weights to GitHub).
 
-### 0) 安装与登录
-- 安装（用于下载与推理提取 embedding）：
+### 0) Install & login
+- Install (for downloading and embedding extraction):
 
 ```bash
 pip install -U transformers accelerate huggingface_hub safetensors
 ```
 
-- 登录（如模型为 gated/需授权，必须先在网页同意协议并使用 token 登录）：
+- Login (required for gated models; accept the license on the model page first, then login with a token):
 
 ```bash
 huggingface-cli login
 ```
 
-> Hugging Face 官网：`https://huggingface.co`
+> Hugging Face website: `https://huggingface.co`
 
-### 1) 下载到 `Chinses_bert/`（BERT-family / 768d）
-选择任意可用的中文 BERT（或医疗领域 BERT）checkpoint，然后执行：
-
-```bash
-huggingface-cli download <BERT_CHECKPOINT_ID> ^
-  --local-dir Chinses_bert ^
-  --local-dir-use-symlinks False
-```
-
-下载完成后，目录里通常应包含 `config.json`、分词器文件以及权重文件（如 `model.safetensors`/`pytorch_model.bin`）。
-
-### 2) 下载到 `LLama2_Chinese_Med/`（LLaMA 2）
-如果使用官方 LLaMA 2（或任何 gated 模型），需要先在 Hugging Face 页面申请/同意协议后再下载：
+### 1) Download into `Chinses_bert/` (BERT-family / 768d)
+Choose any available Chinese BERT (or a clinical BERT) checkpoint, then run:
 
 ```bash
-huggingface-cli download meta-llama/Llama-2-7b-hf ^
-  --local-dir LLama2_Chinese_Med ^
-  --local-dir-use-symlinks False
+huggingface-cli download <BERT_CHECKPOINT_ID> --local-dir Chinses_bert --local-dir-use-symlinks False
 ```
 
-如你使用的是中文/医疗微调版 LLaMA 2，请把 `meta-llama/Llama-2-7b-hf` 替换为你的模型 ID。
+After download, the folder should contain `config.json`, tokenizer files, and model weights (e.g., `model.safetensors` / `pytorch_model.bin`).
 
-### 3) 下载到 `Llama3-8B-Chinese-Chat/`（LLaMA 3）
+### 2) Download into `LLama2_Chinese_Med/` (LLaMA 2)
+If you use the official LLaMA 2 checkpoint (or any gated model), request/accept access on Hugging Face first:
 
 ```bash
-huggingface-cli download meta-llama/Meta-Llama-3-8B-Instruct ^
-  --local-dir Llama3-8B-Chinese-Chat ^
-  --local-dir-use-symlinks False
+huggingface-cli download meta-llama/Llama-2-7b-hf --local-dir LLama2_Chinese_Med --local-dir-use-symlinks False
 ```
 
-### 4) 注意事项
-- **不要提交模型权重**：本仓库 `.gitignore` 已对上述目录做了忽略（仅保留 `.gitkeep` 占位）。
-- **Windows 命令行**：上面示例用 `^` 进行换行（PowerShell/CMD 通用写法之一）；如你使用 bash，请把 `^` 改为 `\\`。
-- **维度匹配**：下游脚本假设你导出的文本 embedding 维度与所选 backbone 对应（例如 7 字段拼接后的总维度）。
+If you use a Chinese/medical fine‑tuned LLaMA 2, replace `meta-llama/Llama-2-7b-hf` with your model id.
+
+### 3) Download into `Llama3-8B-Chinese-Chat/` (LLaMA 3)
+
+```bash
+huggingface-cli download meta-llama/Meta-Llama-3-8B-Instruct --local-dir Llama3-8B-Chinese-Chat --local-dir-use-symlinks False
+```
+
+### 4) Notes
+- **Do not commit weights**: `.gitignore` ignores the model folders (only `.gitkeep` placeholders are tracked).
+- **Dimension matching**: downstream scripts assume your exported text embedding dimensions match the chosen backbone (e.g., the 7-field concatenated dimension).
 
 ---
 
