@@ -13,7 +13,7 @@ To support reproducible downstream research, the codebase includes example prepr
 
 ## Highlights
 - Multi‑modal fusion of:
-  - **Structured series features** (21 variables)
+  - **Structured series features** (20 variables)
   - **Clinical text embeddings** (7 text fields concatenated)
 - A shared **graph template** (`21×21`) is used for the structured branch.
 - Supports multiple text backbones by swapping the exported embedding matrix:
