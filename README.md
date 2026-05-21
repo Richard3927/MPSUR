@@ -3,7 +3,7 @@
 ## Abstract
 Unplanned reoperations are commonly regarded as key indicators of surgical quality and patient safety, yet the process of determining their underlying causes is often time‑consuming and non‑standardized. In real‑world clinical documentation, the evidence needed for cause attribution is distributed across heterogeneous electronic medical records (EMRs): structured perioperative variables (e.g., demographics and perioperative status) coexist with free‑text narratives (e.g., diagnoses, operative notes, and procedures), and the content and style of documentation can vary across departments and institutions. These characteristics make automated cause categorization difficult for methods that rely on a single modality or assume uniform data representations.
 
-This repository provides research code for **MPSUR** (Multi‑modal Prediction System for Causes of Unplanned Reoperation), a multi‑modal learning pipeline that frames the problem as **multi‑class cause categorization** from multi‑modal EMR features. MPSUR integrates (i) **21 structured variables** and (ii) embeddings derived from **multiple clinical text fields**. For the structured modality, variables are treated as nodes in a shared graph, and a fixed **graph template** is used to encode inter‑variable relationships in a consistent manner across samples. For the text modality, MPSUR adopts a backbone‑agnostic interface that consumes **pre‑exported embeddings** from external encoders (e.g., BERT‑family or LLaMA‑family checkpoints), without redistributing any model weights.
+This repository provides research code for **MPSUR** (Multi‑modal Prediction System for Causes of Unplanned Reoperation), a multi‑modal learning pipeline that frames the problem as **multi‑class cause categorization** from multi‑modal EMR features. MPSUR integrates (i) **20 structured variables** and (ii) embeddings derived from **multiple clinical text fields**. For the structured modality, variables are treated as nodes in a shared graph, and a fixed **graph template** is used to encode inter‑variable relationships in a consistent manner across samples. For the text modality, MPSUR adopts a backbone‑agnostic interface that consumes **pre‑exported embeddings** from external encoders (e.g., BERT‑family or LLaMA‑family checkpoints), without redistributing any model weights.
 
 To support reproducible downstream research, the codebase includes example preprocessing utilities for converting tabular sources into model‑ready numeric matrices, data loading/reshaping helpers for different embedding dimensions, and a training script that performs cross‑validation and reports predictions for fused and single‑modality branches. Due to privacy constraints, no patient‑level EMR data is included; instead, the project standardizes the expected input formats and provides a modular implementation that can be adapted to institution‑specific data pipelines.
 
@@ -15,7 +15,7 @@ To support reproducible downstream research, the codebase includes example prepr
 - Multi‑modal fusion of:
   - **Structured series features** (20 variables)
   - **Clinical text embeddings** (7 text fields concatenated)
-- A shared **graph template** (`21×21`) is used for the structured branch.
+- A shared **graph template** (`20×20`) is used for the structured branch.
 - Supports multiple text backbones by swapping the exported embedding matrix:
   - CB (BERT-family, 768‑d)
   - LLaMA 2 / LLaMA 3 (hidden states used as embeddings)
@@ -38,10 +38,10 @@ To support reproducible downstream research, the codebase includes example prepr
 **Goal:** multi‑class classification of the cause category (e.g., bleeding / infection / other factors).
 
 **Inputs:**
-1. **Structured series**: 21 encoded variables.
+1. **Structured series**: 20 encoded variables.
 2. **Clinical text**: 7 text fields embedded by a backbone model and concatenated.
 
-**Graph template:** the structured branch expects a precomputed adjacency matrix (e.g., `adj_template_1.txt`, shape `21×21`) reused across samples.
+**Graph template:** the structured branch expects a precomputed adjacency matrix (e.g., `adj_template_1.txt`, shape `20×20`) reused across samples.
 
 ---
 
@@ -61,7 +61,7 @@ Due to patient privacy and institutional constraints, **raw EMR data is not incl
 A plain‑text numeric matrix where:
 - column 0: `patient_id` (or record index)
 - column 1: `label` (`0/1/2` according to your preprocessing)
-- columns 2..: **21 structured features**
+- columns 2..: **20 structured features**
 
 ### Text embedding matrix
 A plain‑text numeric matrix where each row is the concatenation of **7 text fields**:
